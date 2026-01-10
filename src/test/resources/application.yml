@@ -1,0 +1,11 @@
+
+mortgage:
+  incomeMultiplier: 4
+  startup:
+    rates:
+      - maturityPeriod: 5
+        interestRate: 3.5
+      - maturityPeriod: 10
+        interestRate: 3.8
+      - maturityPeriod: 20
+        interestRate: 4.5

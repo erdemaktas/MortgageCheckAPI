@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mortgage-check-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+
+mortgage:
+  incomeMultiplier: 4
+  startup:
+    rates:
+      - maturityPeriod: 5
+        interestRate: 3.5
+      - maturityPeriod: 10
+        interestRate: 3.8
+      - maturityPeriod: 20
+        interestRate: 4.5
