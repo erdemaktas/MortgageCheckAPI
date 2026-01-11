@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class InMemoryInterestRateRepositoryTest {
+class InMemoryInterestRateRepositoryTest {
     private InMemoryInterestRateRepository repository;
 
     @BeforeEach

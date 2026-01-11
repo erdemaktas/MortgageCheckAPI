@@ -50,11 +50,11 @@ class MortgageControllerIT {
         InterestRate r10 = mock(InterestRate.class);
         when(r10.maturityPeriod()).thenReturn(10);
         when(r10.interestRate()).thenReturn(new BigDecimal("3.75"));
-        when(r10.lastUpdate()).thenReturn(Instant.parse("2025-12-01T10:30:00Z"));
+        when(r10.lastUpdate()).thenReturn(Instant.parse("2024-12-01T10:30:00Z"));
         InterestRate r30 = mock(InterestRate.class);
         when(r30.maturityPeriod()).thenReturn(30);
         when(r30.interestRate()).thenReturn(new BigDecimal("5.25"));
-        when(r30.lastUpdate()).thenReturn(Instant.parse("2025-12-01T10:30:00Z"));
+        when(r30.lastUpdate()).thenReturn(Instant.parse("2024-12-31T10:30:00Z"));
         when(interestRateService.getAllRates()).thenReturn(List.of(r30, r10, r20));
 
 
@@ -195,7 +195,7 @@ class MortgageControllerIT {
                               "loanValue": 150000,
                               "homeValue": 200000
                             }
-                        """, List.of("maturityPeriod: Maturity period must be between 1 and 30 years")),
+                        """, List.of("maturityPeriod: Maturity Period must be between 1 and 30 years")),
 
                 // maturity > 30
                 Arguments.of("""
@@ -205,7 +205,7 @@ class MortgageControllerIT {
                               "loanValue": 150000,
                               "homeValue": 200000
                             }
-                        """, List.of("maturityPeriod: Maturity period must be between 1 and 30 years")),
+                        """, List.of("maturityPeriod: Maturity Period must be between 1 and 30 years")),
 
                 // loanValue <= 0
                 Arguments.of("""
@@ -215,7 +215,7 @@ class MortgageControllerIT {
                               "loanValue": 0,
                               "homeValue": 200000
                             }
-                        """, List.of("loanValue: Loan value must be greater than 0")),
+                        """, List.of("loanValue: Loan Value must be greater than 0")),
 
                 // homeValue <= 0
                 Arguments.of("""
@@ -225,7 +225,7 @@ class MortgageControllerIT {
                               "loanValue": 150000,
                               "homeValue": 0
                             }
-                        """, List.of("homeValue: Home value must be greater than 0")),
+                        """, List.of("homeValue: Home Value must be greater than 0")),
 
                 // homeValue null + multiple violations together
                 Arguments.of("""
@@ -237,8 +237,8 @@ class MortgageControllerIT {
                             }
                         """, List.of(
                         "income: Income must be greater than 0",
-                        "maturityPeriod: Maturity period must be between 1 and 30 years",
-                        "loanValue: Loan value must be greater than 0",
+                        "maturityPeriod: Maturity Period must be between 1 and 30 years",
+                        "loanValue: Loan Value must be greater than 0",
                         "homeValue: must not be null"
                 ))
         );

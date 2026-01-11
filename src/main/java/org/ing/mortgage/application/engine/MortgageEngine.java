@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MortgageEngine {
     private final MortgageService mortgageService;
-    public final InterestRateService interestRateService;
+    private final InterestRateService interestRateService;
 
     public MortgageResult calculateMortgageCost(MortgageInput mortgageInput) {
         if (mortgageService.isFeasible(mortgageInput)) {

@@ -50,9 +50,9 @@ public class GlobalExceptionHandlerTest {
         MethodArgumentNotValidException exc = mock(MethodArgumentNotValidException.class);
         when(exc.getBindingResult()).thenReturn(bindingResult);
 
-        ResponseEntity<ApiError> resp = handler.handleGeneric(exc, req);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, resp.getStatusCode());
-        assertEquals("ValidationFailed", resp.getBody().message());
+        ResponseEntity<ApiError> resp = handler.handleValidation(exc, req);
+        assertEquals(HttpStatus.BAD_REQUEST, resp.getStatusCode());
+        assertEquals("Validation failed", resp.getBody().message());
         assertEquals("/test", resp.getBody().path());
         assertTrue(resp.getBody().details().contains("field: must not be blank"));
     }
