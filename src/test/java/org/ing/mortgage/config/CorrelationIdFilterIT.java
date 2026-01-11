@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = CorrelationIdFilterIT.TestController.class)
+@WebMvcTest(controllers = TestController.class)
 @Import(CorrelationIdFilter.class)
 class CorrelationIdFilterIT {
 
@@ -35,7 +35,7 @@ class CorrelationIdFilterIT {
     @BeforeEach
     public void createAppender() {
         // Create an in-memory appender
-        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender = new ListAppender<>();
         listAppender.start();
         logger.addAppender(listAppender);
     }
@@ -87,23 +87,23 @@ class CorrelationIdFilterIT {
             assertThat(event.getFormattedMessage()).contains("status=500");
         });
     }
+}
 
-    @RestController
-    static class TestController {
+@RestController
+class TestController {
 
-        @GetMapping("/test")
-        public String test() {
-            return "ok";
-        }
+    @GetMapping("/test")
+    public String test() {
+        return "ok";
+    }
 
-        @GetMapping("/bad-request")
-        public void badRequest(HttpServletResponse response) throws java.io.IOException {
-            response.sendError(400, "Bad Request");
-        }
+    @GetMapping("/bad-request")
+    public void badRequest(HttpServletResponse response) throws java.io.IOException {
+        response.sendError(400, "Bad Request");
+    }
 
-        @GetMapping("/server-error")
-        public void serverError() {
-            throw new RuntimeException("Server error");
-        }
+    @GetMapping("/server-error")
+    public void serverError() {
+        throw new RuntimeException("Server error");
     }
 }
