@@ -61,15 +61,8 @@ visualized via Swagger UI.
 
 Errors are handled centrally using a global exception handler.
 
-### Validation Errors
-
 -   Input validation errors are caught early
 -   Clear, client-friendly error responses are returned
-
-### Application Errors
-
--   Application-level exceptions are explicitly modeled
--   Controllers never leak internal exceptions
 
 This ensures predictable API behavior and easier client integration.
 
@@ -110,7 +103,6 @@ This ensures predictable API behavior and easier client integration.
 - Current configuration: 15 requests per minute
 - Requests exceeding the limit return **HTTP 429 Too Many Requests**
 - Implemented at the **adapter layer** using `@RateLimiter` annotations
-- Preserves **hexagonal architecture**; application layer is unaffected
 
 These allow the service to be safely deployed in containerized
 environments.
@@ -129,7 +121,7 @@ Testing follows a **test pyramid** approach.
 ### Integration Tests
 
 -   Verifying adapter-to-application wiring
--   Persistence and API layer validation
+-   API layer validation
 
 ### Mutation Testing
 
