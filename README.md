@@ -104,6 +104,14 @@ This ensures predictable API behavior and easier client integration.
     - Logs with correlation IDs allow root-cause investigation (“which request was slow or failed?”)
     - One log per request balances observability with performance and avoids log noise
 
+### Rate Limiting
+
+- All API endpoints are protected with a **Resilience4j RateLimiter**
+- Current configuration: 15 requests per minute
+- Requests exceeding the limit return **HTTP 429 Too Many Requests**
+- Implemented at the **adapter layer** using `@RateLimiter` annotations
+- Preserves **hexagonal architecture**; application layer is unaffected
+
 These allow the service to be safely deployed in containerized
 environments.
 
@@ -176,9 +184,7 @@ Given more time or a more complex domain, the following would be added:
 
 -   API versioning strategy
 -   Domain-level error taxonomy
--   Rate limiting
 -   Security (JWT / OAuth2)
--   ADRs (Architecture Decision Records)
 -   Contract testing for adapters
 -   Distributed tracing
 -   CI/CD

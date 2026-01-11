@@ -23,9 +23,9 @@ management:
 resilience4j.ratelimiter:
   instances:
     apiRateLimiter:
-      limit-for-period: 5   # max requests
-      limit-refresh-period: 1m  # per minute
-      timeout-duration: 0   # fail immediately if limit reached
+      limitForPeriod: 15   # max requests
+      limitRefreshPeriod: 1m  # per minute
+      timeoutDuration: 0   # fail immediately if limit reached
 
 logging:
   level:

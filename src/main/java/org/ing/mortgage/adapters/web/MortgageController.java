@@ -37,11 +37,12 @@ public class MortgageController {
         return ResponseEntity.ok(dto);
     }
 
-    public void rateLimitFallback(RequestNotPermitted ex) {
+    public ResponseEntity rateLimitFallback(RequestNotPermitted ex) {
         throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many requests");
     }
 
     @PostMapping("/mortgage-check")
+    @RateLimiter(name = "apiRateLimiter", fallbackMethod = "rateLimitFallback")
     public ResponseEntity<MortgageCheckResponse> mortgageCheck(@Valid @RequestBody MortgageCheckRequest request){
         MortgageInput mortgageInput = MortgageInput.builder()
                 .income(request.getIncome())
