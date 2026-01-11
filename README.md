@@ -1,9 +1,9 @@
-# Production-Ready API -- Tech Lead Assignment
+# Production-Ready API -- Chapter Lead Assignment
 
 ## Overview
 
 This project is a **production-ready REST API** implemented in **Java
-with Spring Boot**, designed to demonstrate **tech-lead / chapter-lead
+with Spring Boot**, designed to demonstrate **Chapter-lead
 level engineering practices** rather than just functional correctness.
 
 The focus is on: 
@@ -181,6 +181,7 @@ Given more time or a more complex domain, the following would be added:
 -   ADRs (Architecture Decision Records)
 -   Contract testing for adapters
 -   Distributed tracing
+-   CI/CD
 
 ------------------------------------------------------------------------
 

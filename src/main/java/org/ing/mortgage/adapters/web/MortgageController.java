@@ -1,5 +1,7 @@
 package org.ing.mortgage.adapters.web;
 
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ing.mortgage.adapters.web.dto.InterestRateDto;
@@ -9,8 +11,10 @@ import org.ing.mortgage.application.engine.MortgageEngine;
 import org.ing.mortgage.application.service.InterestRateService;
 import org.ing.mortgage.domain.MortgageInput;
 import org.ing.mortgage.domain.MortgageResult;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -23,6 +27,7 @@ public class MortgageController {
     private final MortgageEngine mortgageEngine;
 
     @GetMapping("/interest-rates")
+    @RateLimiter(name = "apiRateLimiter", fallbackMethod = "rateLimitFallback")
     public ResponseEntity<List<InterestRateDto>> getInterestRates(){
         List<InterestRateDto> dto = interestRateService.getAllRates().stream()
                 .filter(interestRate -> interestRate.maturityPeriod() != null)
@@ -30,6 +35,10 @@ public class MortgageController {
                 .sorted(Comparator.comparingInt(InterestRateDto::maturityPeriod))
                 .toList();
         return ResponseEntity.ok(dto);
+    }
+
+    public void rateLimitFallback(RequestNotPermitted ex) {
+        throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many requests");
     }
 
     @PostMapping("/mortgage-check")

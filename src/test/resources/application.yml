@@ -9,3 +9,11 @@ mortgage:
         interestRate: 3.8
       - maturityPeriod: 20
         interestRate: 4.5
+
+
+resilience4j.ratelimiter:
+  instances:
+    apiRateLimiter:
+      limit-for-period: 5   # max requests
+      limit-refresh-period: 1m  # per minute
+      timeout-duration: 0   # fail immediately if limit reached
